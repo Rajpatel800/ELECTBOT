@@ -2,7 +2,7 @@
 
 ![ElectBot Hero Preview](https://via.placeholder.com/1200x600/1a237e/FFFFFF?text=ElectBot+-+AI-Powered+Civic+Education)
 
-ElectBot is a modern, interactive web application designed to simplify and elevate the election process for citizens. Built for the **Google Virtual PromptWars**, it leverages advanced AI to provide accurate, context-aware civic education.
+ElectBot is a modern, interactive web application designed to simplify and elevate the election process for citizens. It leverages advanced AI to provide accurate, context-aware civic education.
 
 By gamifying the learning process and offering a localized experience, ElectBot ensures users understand their democratic rights, registration processes, and upcoming election timelines.
 
@@ -109,7 +109,6 @@ electbot-nextjs/
 
 ---
 
-## 🤝 Submission Context
+## 🤝 Mission
 
-Created with ❤️ for **Google Virtual PromptWars 2026**.
 Designed to showcase the power of AI in fostering civic engagement, accessibility, and high-quality user experience design.
