@@ -20,6 +20,18 @@ export const indiaQuestions: Question[] = [
   { q: "How often are Lok Sabha elections held?", options: ["Every 3 years", "Every 4 years", "Every 5 years", "Every 6 years"], correct: 2, explanation: "✅ Lok Sabha elections are held every 5 years unless the House is dissolved earlier." },
   { q: "Which article of the Indian Constitution deals with elections?", options: ["Article 14", "Article 324", "Article 370", "Article 21"], correct: 1, explanation: "✅ Article 324 of the Constitution vests the superintendence, direction, and control of elections in the Election Commission of India." },
   { q: "What is Form 6 used for in Indian elections?", options: ["Applying for Aadhaar card", "Registering as a new voter", "Filing a complaint against a candidate", "Requesting a postal ballot"], correct: 1, explanation: "✅ Form 6 is the application form used for new voter registration in India at voters.eci.gov.in." },
+  { q: "What does VVPAT stand for?", options: ["Voter Verifiable Paper Audit Trail", "Voting Verification Panel And Tool", "Valid Vote Paper Assessment Test", "Virtual Voter Polling Action Tracker"], correct: 0, explanation: "✅ VVPAT allows voters to verify that their vote was cast correctly via a printed paper slip." },
+  { q: "What is the Model Code of Conduct (MCC)?", options: ["A dress code for politicians", "Guidelines for political parties during elections", "A list of approved election symbols", "The software used in EVMs"], correct: 1, explanation: "✅ The MCC is a set of guidelines issued by ECI to ensure free and fair elections, preventing ruling parties from misusing official machinery." },
+  { q: "Who was the first Chief Election Commissioner of India?", options: ["Sukumar Sen", "T. N. Seshan", "Rajiv Kumar", "Sunil Arora"], correct: 0, explanation: "✅ Sukumar Sen was the first Chief Election Commissioner of India, serving from 1950 to 1958." },
+  { q: "What is the maximum number of candidates an EVM can cater to?", options: ["16", "32", "64", "384"], correct: 3, explanation: "✅ An EVM can cater to a maximum of 384 candidates (including NOTA) by cascading 24 Balloting Units." },
+  { q: "What happens if a candidate's votes are less than 1/6th of total valid votes?", options: ["They are disqualified for 6 years", "Their security deposit is forfeited", "They must re-run", "They lose their party symbol"], correct: 1, explanation: "✅ A candidate loses their security deposit (Zamanat Zapt) if they fail to secure at least one-sixth (16.67%) of the total valid votes polled." },
+  { q: "Which app allows citizens to report Model Code of Conduct violations?", options: ["cVIGIL", "Voter Helpline", "DigiLocker", "BHIM"], correct: 0, explanation: "✅ cVIGIL allows vigilant citizens to anonymously report MCC violations with photo and video evidence directly to the ECI." },
+  { q: "What is the minimum age to contest Lok Sabha elections?", options: ["18 years", "21 years", "25 years", "30 years"], correct: 2, explanation: "✅ A citizen must be at least 25 years old to contest Lok Sabha or State Legislative Assembly elections." },
+  { q: "How are Rajya Sabha members elected?", options: ["Directly by citizens", "By elected MLAs of State Assemblies", "Nominated by the Prime Minister", "By Lok Sabha MPs"], correct: 1, explanation: "✅ Rajya Sabha members are elected indirectly by the elected members of State Legislative Assemblies (MLAs) using a single transferable vote." },
+  { q: "What is the term length for a Rajya Sabha member?", options: ["4 years", "5 years", "6 years", "Life term"], correct: 2, explanation: "✅ Rajya Sabha members serve a 6-year term, with one-third of the members retiring every 2 years." },
+  { q: "Who does delimitation of constituencies in India?", options: ["The President", "The Election Commission", "The Delimitation Commission", "The Supreme Court"], correct: 2, explanation: "✅ The Delimitation Commission redraws the boundaries of parliamentary and assembly constituencies to represent changes in population." },
+  { q: "What is the role of a Booth Level Officer (BLO)?", options: ["To count votes on result day", "To maintain and update the electoral roll at grassroot level", "To provide security at polling booths", "To repair EVMs natively"], correct: 1, explanation: "✅ BLOs are grassroots officials (often teachers or Anganwadi workers) responsible for maintaining accurate voter lists." },
+  { q: "By which constitutional amendment was the voting age reduced from 21 to 18?", options: ["42nd Amendment", "44th Amendment", "61st Amendment", "73rd Amendment"], correct: 2, explanation: "✅ The 61st Amendment Act, 1988 formally lowered the voting age across India." }
 ];
 
 export const usaQuestions: Question[] = [
@@ -31,6 +43,18 @@ export const usaQuestions: Question[] = [
   { q: "What is the Electoral College?", options: ["A college course about elections", "The U.S. Senate voting on elections", "A group of electors who formally elect the President and Vice President", "The Supreme Court body that certifies results"], correct: 2, explanation: "✅ The Electoral College is 538 electors who formally cast electoral votes for President after the November election." },
   { q: "Which amendment prevents denying the vote based on race?", options: ["13th Amendment", "14th Amendment", "15th Amendment", "Voting Rights Act"], correct: 2, explanation: "✅ The 15th Amendment (1870) prohibits denying the right to vote based on race." },
   { q: "What is a 'provisional ballot'?", options: ["A paper ballot counted immediately", "A ballot cast when a voter's eligibility cannot be confirmed", "An absentee ballot sent by mail", "A ballot used only in primaries"], correct: 1, explanation: "✅ A provisional ballot is set aside and verified after Election Day when a voter's eligibility is questioned." },
+  { q: "How many U.S. Senators does each state have?", options: ["It depends on the population", "1", "2", "4"], correct: 2, explanation: "✅ Every state has exactly 2 Senators, ensuring equal representation in the Senate regardless of population." },
+  { q: "What is 'Gerrymandering'?", options: ["A type of voting machine", "Manipulating electoral boundaries to favor one party", "The process of counting mail-in ballots", "A filibuster tool"], correct: 1, explanation: "✅ Gerrymandering is the practice of drawing district lines in a way that gives a political advantage to a specific party or group." },
+  { q: "What is a 'Swing State'?", options: ["A state where voters use swing voting booths", "A state that heavily favors one party", "A state where support for major parties is evenly divided", "A state that allows voting on swings"], correct: 2, explanation: "✅ Swing states (or battleground states) are closely contested and can 'swing' to either major party in a presidential election." },
+  { q: "How long is the term for a U.S. Senator?", options: ["2 years", "4 years", "6 years", "8 years"], correct: 2, explanation: "✅ U.S. Senators serve 6-year terms, with one-third of the seats up for election every 2 years." },
+  { q: "How long is the term for a U.S. Representative (House)?", options: ["2 years", "4 years", "6 years", "8 years"], correct: 0, explanation: "✅ Members of the House of Representatives serve 2-year terms and are up for reelection every cycle." },
+  { q: "What was the significance of the 24th Amendment?", options: ["It abolished slavery", "It banned poll taxes as a requirement to vote", "It allowed 18-year-olds to vote", "It created the Electoral College"], correct: 1, explanation: "✅ The 24th Amendment (1964) prohibited Congress and states from using poll taxes, which had been used to disenfranchise poorer, primarily Black voters." },
+  { q: "What is an 'Open Primary'?", options: ["A primary held outdoors", "A primary where voters can vote in any party's primary regardless of their own registration", "A primary that has no deadline", "A primary solely for Independent voters"], correct: 1, explanation: "✅ In an open primary, voters can choose which party's primary ballot to vote on, regardless of their own political affiliation." },
+  { q: "Who is responsible for the administration of elections in the U.S.?", options: ["The Federal Election Commission only", "The President", "State and local governments", "The Supreme Court"], correct: 2, explanation: "✅ The U.S. has a decentralized election system where state and local governments run elections, leading to varying rules across the country." },
+  { q: "What does the FEC (Federal Election Commission) do?", options: ["Determines the Electoral College winner", "Enforces campaign finance laws and contribution limits", "Draws voting district maps", "Selects the candidates for the parties"], correct: 1, explanation: "✅ The FEC regulates campaign finance legislation, tracking and disclosing donations to federal campaigns." },
+  { q: "What is a 'Caucus' in the context of nominating season?", options: ["A secret ballot primary", "A local gathering where voters openly decide who to support", "The official debate between candidates", "The fundraising committee for a candidate"], correct: 1, explanation: "✅ A caucus is a local meeting where party members gather to openly debate and vote for their preferred candidate (e.g., the Iowa caucuses)." },
+  { q: "What did the Voting Rights Act of 1965 achieve?", options: ["Gave women the right to vote", "Outlawed discriminatory voting practices like literacy tests", "Lowered the voting age to 18", "Established the Electoral College"], correct: 1, explanation: "✅ The VRA landmark legislation outlawed discriminatory practices such as literacy tests that had disenfranchised minority voters for decades." },
+  { q: "Can a U.S. President serve more than two terms?", options: ["Yes, unlimited terms", "Yes, up to 3 terms", "No, the 22nd Amendment limits the President to two elected terms", "Yes, but only if they are not consecutive"], correct: 2, explanation: "✅ The 22nd Amendment (1951) strictly limits any individual to serving two elected terms as President." }
 ];
 
 // ─────────────────────────────────────────────
@@ -112,63 +136,84 @@ export interface TimelineTab {
 
 export const indiaTimeline: TimelineTab[] = [
   {
-    key: "lok", label: "Lok Sabha 2024",
+    key: "state2026", label: "State Elections 2026",
     items: [
-      { status: "completed", dot: "✓", date: "March 16, 2024", title: "Election Schedule Announced", desc: "ECI announced the 7-phase Lok Sabha election schedule for 2024.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "March 28, 2024", title: "Model Code of Conduct", desc: "Model Code of Conduct came into effect, restricting government announcements and political activities.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "Phase 1 – April 19, 2024", title: "Phase 1 Voting", desc: "102 constituencies across 21 states and UTs voted in the first phase.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "April 26 – May 20, 2024", title: "Phases 2–6 Voting", desc: "Remaining phases covering all 543 Lok Sabha constituencies across India.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "★", date: "June 1, 2024", title: "🗳️ Phase 7 — Final Voting Day", desc: "The 7th and final phase of voting. All voters exercised their franchise across remaining constituencies.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "gold", dot: "🎉", date: "June 4, 2024", title: "Vote Counting & Results", desc: "Votes counted across all constituencies. Results declared by ECI. NDA won majority, PM Modi sworn in for 3rd term.", tag: "Results", tagColor: "bg-amber-100 text-amber-700" },
+      { status: "completed", dot: "✓", date: "January 2026", title: "ECI Schedule Announcement", desc: "Election Commission of India announced the consolidated election schedule for Tamil Nadu, Kerala, Assam, Puducherry, and West Bengal — all due for election by mid-2026.", tag: "Announced", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "February 19, 2026", title: "Model Code of Conduct — Southern States", desc: "MCC took effect for Tamil Nadu, Kerala, and Puducherry as ECI announced poll dates. Political parties restricted from making new policy announcements.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "March 27, 2026", title: "🗳️ Tamil Nadu Assembly Election", desc: "234 assembly constituencies voted across Tamil Nadu. Tamil Nadu was the largest of the 2026 state elections with high voter turnout.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "April 3, 2026", title: "🗳️ Kerala, Assam & Puducherry Polling", desc: "Kerala (140 seats), Assam (126 seats), and Puducherry (30 seats) voted simultaneously in a single phase each.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "current", dot: "★", date: "April 17–May 1, 2026", title: "🗳️ West Bengal Assembly Election", desc: "West Bengal Vidhan Sabha election across 294 constituencies. Multi-phase election covering all districts. High-stakes election with fierce competition.", tag: "Live Now", tagColor: "bg-[#e0e0ff] text-[#1a237e]", reminder: true },
+      { status: "upcoming", dot: "○", date: "May 5–8, 2026", title: "Results — All 5 States", desc: "Vote counting and result declaration for Tamil Nadu, Kerala, Assam, Puducherry, and West Bengal simultaneously.", tag: "Upcoming", tagColor: "bg-amber-100 text-amber-700", reminder: true },
     ],
   },
   {
-    key: "state", label: "State Elections 2025",
+    key: "bihar2025", label: "Bihar 2025",
     items: [
-      { status: "completed", dot: "✓", date: "February 2025", title: "Delhi Assembly Elections", desc: "Delhi Vidhan Sabha elections — 70 seats contested. BJP won majority.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "current", dot: "★", date: "Mid 2025", title: "🗳️ Bihar Assembly Elections", desc: "Elections for Bihar Vidhan Sabha expected in 2025. ECI to announce schedule.", tag: "Upcoming", tagColor: "bg-[#e0e0ff] text-[#1a237e]", reminder: true },
-      { status: "upcoming", dot: "○", date: "2025–2026", title: "Other State Elections", desc: "Several other states including UP local elections, Panchayat elections, and municipal corporation elections.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "completed", dot: "✓", date: "September 2025", title: "ECI Announces Bihar Poll Dates", desc: "Election Commission of India announced the two-phase Bihar Vidhan Sabha election schedule for 243 assembly constituencies.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "October 28, 2025", title: "🗳️ Bihar Phase 1 Voting", desc: "Phase 1 covered 121 constituencies across northern and central Bihar. Voter turnout reported above 58%.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "November 5, 2025", title: "🗳️ Bihar Phase 2 Voting", desc: "Final phase covered remaining 122 constituencies in southern Bihar, Patna district, and border regions.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "gold", dot: "🎉", date: "November 8, 2025", title: "Bihar Results Declared", desc: "Results announced for all 243 seats. Government formation took place within two weeks of the result.", tag: "Completed", tagColor: "bg-amber-100 text-amber-700" },
+      { status: "completed", dot: "✓", date: "February 2026", title: "Delhi Assembly Election", desc: "70-seat Delhi Vidhan Sabha election held. Results declared with BJP retaining majority in the capital.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
     ],
   },
   {
-    key: "next", label: "Future Elections",
+    key: "lok2024", label: "Lok Sabha 2024",
     items: [
-      { status: "upcoming", dot: "○", date: "2026", title: "Multiple State Assembly Elections", desc: "West Bengal, Tamil Nadu, Kerala, and Assam assemblies due for elections in 2026.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
-      { status: "upcoming", dot: "○", date: "2029", title: "🇮🇳 Lok Sabha General Election", desc: "Next General Election for all 543 Lok Sabha seats. Expected April–May 2029.", tag: "Next General", tagColor: "bg-amber-100 text-amber-700", reminder: true },
+      { status: "completed", dot: "✓", date: "April 19 – June 1, 2024", title: "🗳️ 7-Phase General Election", desc: "543 Lok Sabha constituencies voted across 7 phases. Over 96 crore registered voters. Largest democratic exercise in human history.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "March – June 2024", title: "Model Code of Conduct", desc: "MCC was in force from March 16 to June 4, 2024. ECI monitored violations via the cVIGIL app.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "gold", dot: "🎉", date: "June 4, 2024", title: "Result Day — NDA Returns to Power", desc: "NDA won majority. PM Narendra Modi sworn in for a historic 3rd consecutive term on June 9, 2024 at Rashtrapati Bhavan.", tag: "Historical", tagColor: "bg-amber-100 text-amber-700" },
+    ],
+  },
+  {
+    key: "future", label: "Future Elections",
+    items: [
+      { status: "upcoming", dot: "○", date: "2027", title: "State Assembly Elections", desc: "Uttar Pradesh, Punjab, Uttarakhand, Goa, and Manipur assemblies due for election in 2027 (5-year cycle from March 2022).", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "upcoming", dot: "○", date: "2028", title: "Rajasthan, MP, Chhattisgarh, Telangana", desc: "Several major state assemblies will go to polls in 2028, including high-stakes races in Rajasthan and Madhya Pradesh.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "upcoming", dot: "★", date: "April–May 2029", title: "🇮🇳 Lok Sabha General Election 2029", desc: "Next General Election for all 543 Lok Sabha seats. Entire country votes. Expected April–May 2029. Register now at voters.eci.gov.in!", tag: "Next General", tagColor: "bg-amber-100 text-amber-700", reminder: true },
     ],
   },
 ];
 
 export const usaTimeline: TimelineTab[] = [
   {
-    key: "general", label: "2024 General",
+    key: "midterm2026", label: "2026 Midterms",
     items: [
-      { status: "completed", dot: "✓", date: "September 20, 2024", title: "Voter Registration Opens", desc: "New voters can begin registering online, by mail, or in person at DMV and election offices.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "October 7, 2024", title: "Voter Registration Deadline", desc: "Last day to register in most states. Some states allow same-day registration.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "October 24, 2024", title: "Early Voting Begins", desc: "Many states open early voting locations 2 weeks before Election Day.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "gold", dot: "🎉", date: "November 5, 2024", title: "🗳️ Election Day", desc: "The main event! Polls open 6 AM – 8 PM. If in line before 8 PM, you MUST be allowed to vote.", tag: "KEY DATE", tagColor: "bg-amber-100 text-amber-700", reminder: true },
-      { status: "upcoming", dot: "○", date: "December 17, 2024", title: "Electoral College Meets", desc: "Presidential electors meet in their states to formally cast electoral votes.", tag: "Done", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "upcoming", dot: "○", date: "January 20, 2025", title: "Inauguration Day", desc: "President sworn into office at the U.S. Capitol at noon Eastern Time.", tag: "Done", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "January 2026", title: "Campaign Season Officially Opens", desc: "Candidates begin filing for all 435 House seats, 33 Senate seats, and 36 Governorships. FEC fundraising data publicly released.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "February – April 2026", title: "State Filing Deadlines Pass", desc: "Candidate filing deadlines close in most early-primary states. Ballot access signatures verified. Party primaries finalized.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "current", dot: "★", date: "May – September 2026", title: "🏛️ Primary Election Season", desc: "States hold party primary elections to select nominees. June and August are peak primary months. Register to vote at vote.gov.", tag: "Ongoing", tagColor: "bg-[#e0e0ff] text-[#1a237e]", reminder: true },
+      { status: "upcoming", dot: "○", date: "October 2026", title: "Early Voting & Registration Deadlines", desc: "Most states close voter registration 15–30 days before Election Day. Early voting opens at polling centers. Request absentee ballots now.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]", reminder: true },
+      { status: "upcoming", dot: "★", date: "November 3, 2026", title: "🗳️ Midterm Election Day", desc: "All 435 House seats, 33 Senate seats, and 36 Governorships up for vote. Polls open 6 AM–8 PM local time. In line before 8 PM? You MUST vote!", tag: "KEY DATE", tagColor: "bg-amber-100 text-amber-700", reminder: true },
+      { status: "upcoming", dot: "○", date: "November – December 2026", title: "Certification & Runoffs", desc: "States certify election results within 30 days. Any required runoff elections held in December 2026.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
     ],
   },
   {
-    key: "primary", label: "Primary 2024",
+    key: "general2024", label: "2024 General",
     items: [
-      { status: "completed", dot: "✓", date: "January 15, 2024", title: "Iowa Caucuses", desc: "First major nominating contest of the presidential primary season.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "March 5, 2024", title: "Super Tuesday", desc: "15+ states held primaries simultaneously. Frontrunner status determined.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "July 2024", title: "Republican National Convention", desc: "Official nomination of the Republican presidential and VP candidates.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
-      { status: "completed", dot: "✓", date: "August 2024", title: "Democratic National Convention", desc: "Official nomination of the Democratic presidential and VP candidates.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "October 24, 2024", title: "Early Voting Opened", desc: "Early voting centers opened across most states — millions cast ballots in the weeks before Election Day.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "gold", dot: "🎉", date: "November 5, 2024", title: "🗳️ Presidential Election Day", desc: "Donald Trump elected 47th President of the United States. Republicans also won Senate majority. Results finalized by December 2024.", tag: "Historical", tagColor: "bg-amber-100 text-amber-700" },
+      { status: "completed", dot: "✓", date: "December 17, 2024", title: "Electoral College Voted", desc: "538 electors formally cast their electoral votes in their respective state capitals. Results certified by Congress.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "completed", dot: "✓", date: "January 20, 2025", title: "Inauguration Day", desc: "President Trump sworn in for his second term at the U.S. Capitol. Vice President JD Vance took the oath of office.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
     ],
   },
   {
-    key: "midterm", label: "2026 Midterms",
+    key: "primary2026", label: "2026 Key Primaries",
     items: [
-      { status: "upcoming", dot: "○", date: "Early 2026", title: "Candidate Filing Begins", desc: "Candidates file to run for all 435 House seats, 33 Senate seats, and 36 Governorships.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
-      { status: "current", dot: "★", date: "November 3, 2026", title: "🏛️ 2026 Midterm Elections", desc: "All 435 House seats, 33 Senate seats, and 36 Governorships on the ballot.", tag: "Upcoming", tagColor: "bg-[#e0e0ff] text-[#1a237e]", reminder: true },
-      { status: "upcoming", dot: "○", date: "November 2028", title: "🇺🇸 Next Presidential Election", desc: "Presidential election — November 7, 2028.", tag: "Future", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "completed", dot: "✓", date: "March 3, 2026", title: "Texas Primary", desc: "One of the first major 2026 primaries. House incumbents faced challengers. Runoffs scheduled for May.", tag: "Completed", tagColor: "bg-[#efecf5] text-[#767683]" },
+      { status: "current", dot: "★", date: "June 2026", title: "🗳️ California & New Jersey Primaries", desc: "High-profile Senate and Governor primaries in California and New Jersey. Multiple competitive races determine November nominees.", tag: "Upcoming", tagColor: "bg-[#e0e0ff] text-[#1a237e]", reminder: true },
+      { status: "upcoming", dot: "○", date: "August 2026", title: "Final State Primaries", desc: "Florida, New York, and other major states hold their primaries. Nominees locked in ahead of the general election.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "upcoming", dot: "○", date: "September 2026", title: "New Hampshire Primary", desc: "Last major state primary before the general election campaign sprint to November.", tag: "Upcoming", tagColor: "bg-[#eae7ef] text-[#454652]" },
+    ],
+  },
+  {
+    key: "future2028", label: "2028 Presidential",
+    items: [
+      { status: "upcoming", dot: "○", date: "2027", title: "Exploratory Committees Form", desc: "Potential 2028 candidates begin forming exploratory committees and building fundraising infrastructure.", tag: "Future", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "upcoming", dot: "○", date: "Early 2028", title: "Presidential Primaries Begin", desc: "Iowa caucuses and New Hampshire primary kick off the 2028 nominating contest. Both parties select their presidential nominees.", tag: "Future", tagColor: "bg-[#eae7ef] text-[#454652]" },
+      { status: "upcoming", dot: "★", date: "November 7, 2028", title: "🇺🇸 Presidential Election", desc: "Next U.S. Presidential Election. The 270 electoral vote threshold remains. Register early at vote.gov. Every vote counts!", tag: "Next Presidential", tagColor: "bg-amber-100 text-amber-700", reminder: true },
     ],
   },
 ];
+
 
 // ─────────────────────────────────────────────
 //  KNOWLEDGE BASE (Chat)
@@ -294,7 +339,7 @@ export const homeContent = {
     headline2: "Samjho",
     subtext: "Chunav prakriya ko step-by-step samjhein — interactive, clear, and empowering. Powered by Gemini AI.",
     stat1: ["6", "Modules"],
-    stat2: ["8", "Quiz Questions"],
+    stat2: ["20", "Quiz Questions"],
     stat3: ["AI", "Powered"],
     card1: "📋 Voter ID Register",
     card2: "🗳️ Vote Karein",
@@ -314,7 +359,7 @@ export const homeContent = {
     headline2: "Your Vote",
     subtext: "Learn how elections work, step by step — interactive, clear, and empowering. Powered by Gemini AI.",
     stat1: ["6", "Topics"],
-    stat2: ["8", "Quiz Questions"],
+    stat2: ["20", "Quiz Questions"],
     stat3: ["AI", "Powered"],
     floatLabels: ["📋 Register to Vote", "🗳️ Cast Your Ballot", "📊 Track Results"],
     steps: [

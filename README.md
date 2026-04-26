@@ -1,114 +1,154 @@
-# 🗳️ ElectBot — AI-Powered Civic Education Assistant
+# ElectBot — Election Process Education Assistant
 
-![ElectBot Hero Preview](https://via.placeholder.com/1200x600/1a237e/FFFFFF?text=ElectBot+-+AI-Powered+Civic+Education)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
+[![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange?logo=firebase)](https://firebase.google.com)
+[![Gemini AI](https://img.shields.io/badge/Gemini-2.0_Flash-blue?logo=google)](https://ai.google.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://typescriptlang.org)
 
-ElectBot is a modern, interactive web application designed to simplify and elevate the election process for citizens. It leverages advanced AI to provide accurate, context-aware civic education.
-
-By gamifying the learning process and offering a localized experience, ElectBot ensures users understand their democratic rights, registration processes, and upcoming election timelines.
-
----
-
-## ✨ Key Features
-
-- **🌍 Dual-Country Localization Mode**
-  - Seamlessly switch between **India (🇮🇳)** and the **USA (🇺🇸)**.
-  - Automatically adapts the entire UI, including timelines, quiz questions, educational modules, and the AI chatbot's knowledge base.
-
-- **🤖 Hybrid AI Chat Engine (Gemini 2.0 Flash)**
-  - Engage with an intelligent, friendly AI assistant.
-  - **Local First:** Operates instantly via a built-in knowledge base.
-  - **AI Powered:** Users can add their own Google AI Studio API key (`LocalStorage` secured) to unlock unlimited, context-aware responses powered by Gemini 2.0 Flash.
-
-- **🏆 Gamified Civic Quiz**
-  - Test knowledge on election history, voting rights, and government structures.
-  - Features real-time scoring, accuracy tracking, and dynamic difficulty based on the selected country context.
-
-- **🗓️ Interactive Election Timelines**
-  - Visual tracking of the democratic process.
-  - Granular breakdown of upcoming general, state, and primary elections.
-
-- **📚 Personalized Learning Hub**
-  - Curated accordion-style modules covering everything from the Electoral College (US) to the EVM and VVPAT systems (India).
-  - Built-in progress tracking to monitor learning completion.
+> **Built for Google Virtual PromptWars** — Challenge: *"Create an assistant that helps users understand the election process, timelines, and steps in an interactive and easy-to-follow way."*
 
 ---
 
-## 🛠️ Technology Stack
+## 🗳️ What is ElectBot?
 
-- **Framework:** Next.js 16 (React, App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS (Custom "Heritage Modern" unified design system)
-- **AI Integration:** Google Gemini API (`gemini-2.0-flash`)
-- **Rendering:** `react-markdown` for rich text output
-- **State Management:** React Hooks & `localStorage` (No external database required)
+ElectBot is an AI-powered civic education platform that helps citizens understand elections for **India 🇮🇳** and the **United States 🇺🇸**. It provides:
+
+- **AI Chat Assistant** — Powered by **Gemini 2.0 Flash**, answers any election question (server-side, key never exposed).
+- **Interactive Learning Hub** — Educational modules stored in **Firebase Firestore**, fetched dynamically.
+- **Civic Quiz** — Timed quizzes with a live **Leaderboard** backed by Firestore.
+- **Election Timeline** — Key dates and milestones for upcoming elections.
 
 ---
 
-## 🚦 Getting Started
+## 🏗️ Architecture
 
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+```
+Browser → Next.js App Router → /api/chat → Gemini 2.0 Flash (Server-side)
+                           └→ Firebase Firestore (Learn Modules, Quiz Scores)
+                           └→ Google Analytics (GA4)
+```
+
+**Stack:**
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5 (strict) |
+| AI | Google Gemini 2.0 Flash |
+| Database | Firebase Firestore |
+| Analytics | Google Analytics 4 (GA4) |
+| Styling | Tailwind CSS v4 |
+| Testing | Jest + React Testing Library |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-* [Node.js](https://nodejs.org/en/) (v18.x or newer recommended)
-* `npm` or `yarn`
+- Node.js 20+
+- A Firebase project with Firestore enabled
+- A Google Gemini API key
 
-### Installation
+### 1. Clone & Install
+```bash
+git clone https://github.com/your-org/electbot-nextjs.git
+cd electbot-nextjs
+npm install
+```
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/electbot-nextjs.git
-   cd electbot-nextjs
-   ```
+### 2. Configure Environment Variables
+Copy the example file and fill in your values:
+```bash
+cp .env.example .env.local
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+Edit `.env.local`:
+```env
+# Gemini AI (server-side only — never use NEXT_PUBLIC_ prefix)
+GEMINI_API_KEY=your_gemini_api_key_here
 
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+# Firebase (public keys — safe for client-side use)
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
-4. **Open the App:**
-   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+# App URL (used for sitemap and robots.txt)
+NEXT_PUBLIC_APP_URL=https://your-deployment-url.vercel.app
+```
+
+### 3. Seed the Database
+Run the development server, then visit the seed URL **once**:
+```bash
+npm run dev
+# Then open: http://localhost:3000/api/seed
+```
+You should see: `{"message":"Successfully seeded 10 educational modules..."}`.
+
+### 4. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 🔑 AI Feature Configuration
+## 🧪 Testing
+```bash
+npm test                  # Run all tests
+npm run test:watch        # Watch mode
+npm run test:coverage     # Coverage report
+```
 
-The application is fully functional out-of-the-box leveraging its built-in knowledge matrix. 
+**Test Coverage:**
+- `countryData.test.ts` — Knowledge base, quiz data integrity, chat chips (22 tests)
+- `firestoreService.test.ts` — Data access layer with mocked Firestore (16 tests)
+- `Leaderboard.test.tsx` — UI component states (6 tests)
+- `chatApiRoute.test.ts` — Gemini configuration and input validation (6 tests)
 
-To enable the advanced Gemini capabilities:
-1. Navigate to the **"Ask ElectBot"** tab.
-2. Click the **"🔑 Add API Key"** button.
-3. Obtain a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
-4. Enter your key. *Note: Keys are stored locally in your browser's `localStorage` and are never broadcasted to external servers besides the direct Google API.*
+---
+
+## 🔒 Security
+
+- **API Key Protection:** The Gemini API key is server-side only (`GEMINI_API_KEY`). It never reaches the browser.
+- **Rate Limiting:** `/api/chat` is rate-limited to 20 requests per IP per minute.
+- **Input Validation:** Message length is capped at 1,000 characters.
+- **Request Timeout:** Gemini calls time out after 15 seconds.
+- **HTTP Headers:** `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, and `Content-Security-Policy` are all set via `next.config.ts`.
 
 ---
 
 ## 📁 Project Structure
 
-```text
-electbot-nextjs/
-├── src/
-│   ├── app/                # Next.js App Router Pages
-│   │   ├── chat/           # Gemini AI Chat Interface
-│   │   ├── learn/          # Progress-tracked educational modules
-│   │   ├── quiz/           # Civic knowledge quizzes
-│   │   ├── timeline/       # Interactive election timelines
-│   │   ├── globals.css     # Tailwind & Custom CSS classes
-│   │   └── layout.tsx      # Global layout & CountryProvider wrapper
-│   ├── components/         # Reusable UI Components (Navbar, etc.)
-│   └── lib/                # Core logic & Data state
-│       ├── countryContext.tsx  # Global state for India/USA toggle
-│       └── countryData.ts      # Centralized matrices for localization
-├── public/                 # Static assets
-└── package.json            # Project dependencies
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── chat/route.ts      # Gemini AI endpoint (rate-limited, typed)
+│   │   └── seed/route.ts      # One-time DB seed (protected in production)
+│   ├── chat/page.tsx          # AI Chat UI
+│   ├── learn/page.tsx         # Dynamic Learning Hub (Firestore)
+│   ├── quiz/page.tsx          # Quiz + Leaderboard
+│   ├── timeline/page.tsx      # Election Timeline
+│   ├── error.tsx              # Global 500 error page
+│   ├── not-found.tsx          # Custom 404 page
+│   ├── robots.ts              # Dynamic robots.txt
+│   └── sitemap.ts             # Dynamic sitemap.xml
+├── components/
+│   ├── ErrorBoundary.tsx      # React error boundary
+│   ├── Leaderboard.tsx        # Firestore-powered leaderboard
+│   └── Navbar.tsx             # Navigation
+├── lib/
+│   ├── countryContext.tsx     # Global country state (React Context)
+│   ├── countryData.ts         # Static data: quiz, chat KB, chips
+│   ├── firebase.ts            # Firebase app singleton
+│   └── firestoreService.ts    # Data access layer (typed)
+└── __tests__/                 # Jest test suites
 ```
 
 ---
 
-## 🤝 Mission
-
-Designed to showcase the power of AI in fostering civic engagement, accessibility, and high-quality user experience design.
+## 📄 License
+MIT © 2025 ElectBot
