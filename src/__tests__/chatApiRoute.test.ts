@@ -105,7 +105,7 @@ describe("Chat Route — Vertex AI (Cloud Run backend)", () => {
     const chat = model.startChat({ history: [] });
     const result = await chat.sendMessage("Where do I vote?");
 
-    expect(result.response.candidates[0].content.parts[0].text).toBe(
+    expect(result.response.candidates?.[0]?.content?.parts?.[0]?.text).toBe(
       "Vote at your polling station."
     );
     expect(mockVertexSendMessage).toHaveBeenCalledWith("Where do I vote?");

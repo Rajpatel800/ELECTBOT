@@ -153,8 +153,7 @@ async function callGeminiAPI(
   systemPrompt: string,
   history: ChatMessage[]
 ): Promise<GenerateResult> {
-  const { GoogleGenerativeAI, type: _type } = await import("@google/generative-ai") as
-    typeof import("@google/generative-ai");
+  const { GoogleGenerativeAI } = await import("@google/generative-ai");
 
   const apiKey = process.env.GEMINI_API_KEY ?? "";
   const genAI  = new GoogleGenerativeAI(apiKey);
