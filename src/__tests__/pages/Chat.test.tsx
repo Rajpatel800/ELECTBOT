@@ -4,10 +4,19 @@ import * as CountryContext from "../../lib/countryContext";
 
 global.fetch = jest.fn();
 
-jest.mock("react-markdown", () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
+jest.mock("react-markdown", () => {
+  const MockReactMarkdown = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
+  MockReactMarkdown.displayName = "ReactMarkdown";
+  return MockReactMarkdown;
+});
 jest.mock("../../lib/countryContext", () => ({
   useCountry: jest.fn(),
 }));
+
+// Suppress expected console.error output from error-path tests
+const originalConsoleError = console.error;
+beforeAll(() => { console.error = jest.fn(); });
+afterAll(() => { console.error = originalConsoleError; });
 
 describe("ChatPage", () => {
   beforeEach(() => {

@@ -5,6 +5,11 @@ import { NextRequest } from "next/server";
 // Mock fetch
 global.fetch = jest.fn();
 
+// Suppress expected console.error output from error-path tests
+const originalConsoleError = console.error;
+beforeAll(() => { console.error = jest.fn(); });
+afterAll(() => { console.error = originalConsoleError; });
+
 describe("Translate API Route", () => {
   beforeEach(() => {
     (global.fetch as jest.Mock).mockClear();

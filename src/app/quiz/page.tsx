@@ -1,16 +1,29 @@
+/**
+ * src/app/quiz/page.tsx
+ *
+ * Interactive civic knowledge quiz with scoring, streak tracking,
+ * and Firestore-backed leaderboard.
+ *
+ * @module QuizPage
+ */
+
 "use client";
-// src/app/quiz/page.tsx
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useCountry } from "@/lib/countryContext";
-import { indiaQuestions, usaQuestions, Question } from "@/lib/countryData";
+import { indiaQuestions, usaQuestions } from "@/lib/countryData";
 import { submitQuizScore } from "@/lib/firestoreService";
 import Leaderboard from "@/components/Leaderboard";
 
-const LETTERS = ["A", "B", "C", "D"];
+/** Option labels for answer choices. */
+const LETTERS = ["A", "B", "C", "D"] as const;
 
+/**
+ * Quiz page component with gamified scoring and country-specific questions.
+ */
 export default function QuizPage() {
   const { country } = useCountry();
-  const questions: Question[] = country === "india" ? indiaQuestions : usaQuestions;
+  const questions = country === "india" ? indiaQuestions : usaQuestions;
 
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -22,15 +35,18 @@ export default function QuizPage() {
   const [answered, setAnswered] = useState(0);
   const [done, setDone] = useState(false);
   const [isSubmittingScore, setIsSubmittingScore] = useState(false);
-  const [prevCountry, setPrevCountry] = useState(country);
-
-  // Reset quiz when country changes
-  if (country !== prevCountry) {
-    setPrevCountry(country);
-    setCurrentQ(0); setSelected(null); setSubmitted(false);
-    setScore(0); setStreak(0); setBestStreak(0);
-    setCorrect(0); setAnswered(0); setDone(false);
-  }
+  // Reset quiz state when country changes
+  useEffect(() => {
+    setCurrentQ(0);
+    setSelected(null);
+    setSubmitted(false);
+    setScore(0);
+    setStreak(0);
+    setBestStreak(0);
+    setCorrect(0);
+    setAnswered(0);
+    setDone(false);
+  }, [country]);
 
   const q = questions[currentQ];
   const progress = ((currentQ + 1) / questions.length) * 100;
@@ -43,7 +59,8 @@ export default function QuizPage() {
     setSubmitted(true);
     if (isCorrect) {
       setScore((s) => s + 100 + streak * 10);
-      setStreak((s) => { setBestStreak((b) => Math.max(b, s + 1)); return s + 1; });
+      setStreak((s) => s + 1);
+      setBestStreak((b) => Math.max(b, streak + 1));
       setCorrect((c) => c + 1);
     } else {
       setStreak(0);
@@ -80,11 +97,11 @@ export default function QuizPage() {
           {country === "india" ? "Bahut badiya! Civic knowledge test complete!" : "Great job completing the civic knowledge quiz!"}
         </p>
         <div className="grid grid-cols-2 gap-4 mb-4" role="group" aria-label="Your quiz results">
-          {[["🎯", "Final Score", score], ["✅", country === "india" ? "Sahi Jawab" : "Correct", `${correct}/${questions.length}`], ["📊", "Accuracy", `${finalAcc}%`], ["🔥", "Best Streak", bestStreak]].map(([em, label, val]) => (
-            <div key={label as string} className="bg-white rounded-2xl p-5 shadow-sm text-center">
+          {([["🎯", "Final Score", score], ["✅", country === "india" ? "Sahi Jawab" : "Correct", `${correct}/${questions.length}`], ["📊", "Accuracy", `${finalAcc}%`], ["🔥", "Best Streak", bestStreak]] as const).map(([em, label, val]) => (
+            <div key={label} className="bg-white rounded-2xl p-5 shadow-sm text-center">
               <span className="text-2xl block mb-1" aria-hidden="true">{em}</span>
               <span className="block text-2xl font-black text-[#1a237e]" aria-label={`${label}: ${val}`}>{val}</span>
-              <span className="text-xs text-[#767683] font-semibold" aria-hidden="true">{label as string}</span>
+              <span className="text-xs text-[#767683] font-semibold" aria-hidden="true">{label}</span>
             </div>
           ))}
         </div>
@@ -113,11 +130,11 @@ export default function QuizPage() {
 
       {/* Score Bar */}
       <div className="flex gap-3 mb-6" role="group" aria-label="Current quiz statistics">
-        {[["🎯", "Score", score], ["🔥", "Streak", streak], ["📊", "Accuracy %", acc]].map(([em, label, val]) => (
-          <div key={label as string} className="flex-1 bg-white rounded-xl p-3 text-center shadow-sm">
+        {([["🎯", "Score", score], ["🔥", "Streak", streak], ["📊", "Accuracy %", acc]] as const).map(([em, label, val]) => (
+          <div key={label} className="flex-1 bg-white rounded-xl p-3 text-center shadow-sm">
             <span className="text-lg block" aria-hidden="true">{em}</span>
             <span className="block font-black text-[#1a237e] text-lg" aria-label={`${label}: ${val}`}>{val}</span>
-            <span className="text-[10px] text-[#767683] font-semibold" aria-hidden="true">{label as string}</span>
+            <span className="text-[10px] text-[#767683] font-semibold" aria-hidden="true">{label}</span>
           </div>
         ))}
       </div>

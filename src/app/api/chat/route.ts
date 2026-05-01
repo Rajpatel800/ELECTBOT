@@ -71,24 +71,9 @@ Rules:
 };
 
 // ─────────────────────────────────────────────
-// Types
+// Types (imported from centralized module)
 // ─────────────────────────────────────────────
-interface ChatMessage {
-  role: "user" | "model" | "bot";
-  parts?: Array<{ text: string }>;
-  content?: string;
-}
-
-interface ChatRequestBody {
-  message: string;
-  country?: string;
-  history?: ChatMessage[];
-}
-
-// Shared response shape used by both AI backends
-interface GenerateResult {
-  text: string;
-}
+import type { ChatAPIHistoryEntry, ChatRequestBody, GenerateResult } from "@/lib/types";
 
 // ─────────────────────────────────────────────
 // Rate limiter helper
@@ -112,7 +97,7 @@ function isRateLimited(ip: string): boolean {
 async function callVertexAI(
   message: string,
   systemPrompt: string,
-  history: ChatMessage[]
+  history: ChatAPIHistoryEntry[]
 ): Promise<GenerateResult> {
   const { VertexAI } = await import("@google-cloud/vertexai");
 
@@ -133,7 +118,7 @@ async function callVertexAI(
   // Build conversation history
   const formattedHistory = history
     .slice(-MAX_HISTORY_TURNS)
-    .map((msg: ChatMessage) => ({
+    .map((msg: ChatAPIHistoryEntry) => ({
       role:  msg.role === "bot" ? "model" : (msg.role as "user" | "model"),
       parts: msg.parts ?? [{ text: msg.content ?? "" }],
     }));
@@ -151,7 +136,7 @@ async function callVertexAI(
 async function callGeminiAPI(
   message: string,
   systemPrompt: string,
-  history: ChatMessage[]
+  history: ChatAPIHistoryEntry[]
 ): Promise<GenerateResult> {
   const { GoogleGenerativeAI } = await import("@google/generative-ai");
 
@@ -166,7 +151,7 @@ async function callGeminiAPI(
   // Build conversation history
   const formattedHistory = history
     .slice(-MAX_HISTORY_TURNS)
-    .map((msg: ChatMessage) => ({
+    .map((msg: ChatAPIHistoryEntry) => ({
       role:  msg.role === "bot" ? "model" : (msg.role as "user" | "model"),
       parts: msg.parts ?? [{ text: msg.content ?? "" }],
     }));
@@ -224,14 +209,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const safeCountry    = validCountries.has(country) ? country : "india";
   const systemPrompt   = SYSTEM_PROMPTS[safeCountry];
 
+  // ── Sanitize history entries ────────────────
+  const sanitizedHistory: ChatAPIHistoryEntry[] = Array.isArray(history)
+    ? history
+        .filter(
+          (entry): entry is ChatAPIHistoryEntry =>
+            typeof entry === "object" &&
+            entry !== null &&
+            (entry.role === "user" || entry.role === "model" || entry.role === "bot")
+        )
+        .slice(-MAX_HISTORY_TURNS)
+    : [];
+
   // ── Select AI backend & call with timeout ──
   // Vertex AI is used when GOOGLE_CLOUD_PROJECT is set (Cloud Run).
   // Otherwise falls back to Gemini Developer API (local dev).
   const useVertexAI = Boolean(process.env.GOOGLE_CLOUD_PROJECT);
 
   const aiCall = useVertexAI
-    ? callVertexAI(message, systemPrompt, history)
-    : callGeminiAPI(message, systemPrompt, history);
+    ? callVertexAI(message, systemPrompt, sanitizedHistory)
+    : callGeminiAPI(message, systemPrompt, sanitizedHistory);
 
   const timeoutPromise = new Promise<never>((_, reject) =>
     setTimeout(() => reject(new Error("Request timed out.")), REQUEST_TIMEOUT_MS)

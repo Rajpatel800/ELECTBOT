@@ -1,7 +1,18 @@
+/**
+ * src/app/learn/page.tsx
+ *
+ * Educational content hub with Firestore-backed learning modules.
+ * Features an accordion UI for module content, progress tracking,
+ * and optional Hindi translation for India mode.
+ *
+ * @module LearnPage
+ */
+
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useCountry } from "@/lib/countryContext";
 import { getLearnModules, LearnModule } from "@/lib/firestoreService";
+import { localLearnModules } from "@/lib/countryData";
 import ReactMarkdown from "react-markdown";
 
 // ─────────────────────────────────────────────
@@ -32,6 +43,7 @@ export default function LearnPage() {
   const { country } = useCountry();
   const [modules, setModules]       = useState<LearnModule[]>([]);
   const [loading, setLoading]       = useState(true);
+  const [usingLocal, setUsingLocal] = useState(false);
   const [openId, setOpenId]         = useState<string | null>(null);
   const [completed, setCompleted]   = useState<Set<string>>(new Set());
 
@@ -41,14 +53,21 @@ export default function LearnPage() {
   const [translatedModules, setTranslatedModules] = useState<LearnModule[]>([]);
   const prevLang                                  = useRef<"en" | "hi">("en");
 
-  // Fetch modules from Firestore when country changes
+  // Fetch modules from Firestore, fallback to local data if empty
   useEffect(() => {
     async function fetchModules() {
       setLoading(true);
       setLang("en");
       setTranslatedModules([]);
       const data = await getLearnModules(country);
-      setModules(data);
+      if (data.length > 0) {
+        setModules(data);
+        setUsingLocal(false);
+      } else {
+        // Fallback to local modules when Firestore is unavailable or empty
+        setModules(localLearnModules[country] ?? []);
+        setUsingLocal(true);
+      }
       setLoading(false);
       setCompleted(new Set());
       setOpenId(null);
@@ -170,11 +189,17 @@ export default function LearnPage() {
             isIndia ? "bg-orange-50 border border-orange-200 text-orange-700" : "bg-blue-50 border border-blue-200 text-blue-700"
           }`}
         >
-          {isIndia
-            ? lang === "hi"
-              ? "🇮🇳 डेटाबेस कनेक्टेड। ECI, EVM सुरक्षा, VVPAT और FPTP पर गहन जानकारी उपलब्ध है।"
-              : "🇮🇳 Database connected. Providing in-depth analysis on ECI, FPTP, EVM Security, and the VVPAT system."
-            : "🇺🇸 Database connected. Providing advanced insights on the Electoral College, Primary Elections, and Registration processes."}
+          {usingLocal
+            ? isIndia
+              ? lang === "hi"
+                ? "🇮🇳 स्थानीय डेटा से लोड किया गया। सभी मॉड्यूल उपलब्ध हैं।"
+                : "🇮🇳 Loaded from local data. All modules available — Firestore index pending."
+              : "🇺🇸 Loaded from local data. All modules available — Firestore index pending."
+            : isIndia
+              ? lang === "hi"
+                ? "🇮🇳 डेटाबेस कनेक्टेड। ECI, EVM सुरक्षा, VVPAT और FPTP पर गहन जानकारी उपलब्ध है।"
+                : "🇮🇳 Database connected. Providing in-depth analysis on ECI, FPTP, EVM Security, and the VVPAT system."
+              : "🇺🇸 Database connected. Providing advanced insights on the Electoral College, Primary Elections, and Registration processes."}
         </div>
 
         {/* Translating status */}

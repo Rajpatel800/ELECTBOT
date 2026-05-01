@@ -89,7 +89,7 @@ describe("Quiz data integrity", () => {
     });
 
     it("every question has a valid correct answer index (0–3)", () => {
-      indiaQuestions.forEach((q, i) => {
+      indiaQuestions.forEach((q) => {
         expect(q.correct).toBeGreaterThanOrEqual(0);
         expect(q.correct).toBeLessThanOrEqual(3);
       });

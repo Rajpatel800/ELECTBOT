@@ -10,15 +10,20 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import type { TranslateRequestBody } from "@/lib/types";
 
-interface TranslateRequestBody {
-  text: string;
-  targetLang: string;
-}
+/** Maximum translation requests allowed per IP per minute. */
+const RATE_LIMIT_MAX = 30;
 
-// Rate limit: max 30 translation requests per minute per IP
+/** Sliding window rate limiter — keyed by IP address. */
 const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
 
+/**
+ * Checks whether a given IP has exceeded the rate limit.
+ *
+ * @param ip - Client IP address.
+ * @returns `true` if the IP has exceeded the per-minute rate limit.
+ */
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
   const entry = rateLimitMap.get(ip);
@@ -26,11 +31,15 @@ function isRateLimited(ip: string): boolean {
     rateLimitMap.set(ip, { count: 1, windowStart: now });
     return false;
   }
-  if (entry.count >= 30) return true;
+  if (entry.count >= RATE_LIMIT_MAX) return true;
   entry.count += 1;
   return false;
 }
 
+/**
+ * Handles POST requests for text translation.
+ * Proxies requests to Google Translate with rate limiting and input validation.
+ */
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const forwarded = req.headers.get("x-forwarded-for");
   const ip        = forwarded ? forwarded.split(",")[0].trim() : "unknown";

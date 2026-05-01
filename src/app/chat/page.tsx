@@ -1,24 +1,43 @@
+/**
+ * src/app/chat/page.tsx
+ *
+ * AI-powered chat interface for the ElectBot assistant.
+ * Supports multi-turn conversations with Gemini AI (via server-side
+ * API route) and falls back to a local knowledge base on failure.
+ *
+ * @module ChatPage
+ */
+
 "use client";
-// src/app/chat/page.tsx
+
 import { useState, useRef, useEffect } from "react";
 import { useCountry } from "@/lib/countryContext";
 import { getLocalAnswer, indiaChips, usaChips } from "@/lib/countryData";
 import ReactMarkdown from "react-markdown";
+import type { ChatMessage, GeminiHistoryEntry } from "@/lib/types";
 
-interface Message { role: "user" | "bot"; content: string; }
+/** India-specific welcome message. */
+const INDIA_WELCOME = "**Namaste! Main ElectBot hoon 🗳️** — aapka AI-powered Indian election guide!\n\nMain aapki madad kar sakta hoon:\n- 🪪 Voter ID (EPIC) card ke baare mein\n- 🗳️ Voting process (EVM, VVPAT, NOTA)\n- 🗓️ Upcoming elections in India\n- ⚖️ Voter rights aur ECI\n\nKya jaanna chahte hain aap?" as const;
+
+/** USA-specific welcome message. */
+const USA_WELCOME = "Hi! I'm **ElectBot** 🗳️ — your AI-powered election guide. I can help you understand the election process, voter registration, timelines, and much more!\n\nWhat would you like to learn today?" as const;
+
+/** India reset welcome message. */
+const INDIA_RESET = "**Namaste! Main ElectBot hoon 🗳️** — aapka AI-powered Indian election guide!\n\nMain aapki madad kar sakta hoon:\n- 🪪 Voter ID (EPIC) card ke baare mein\n- 🗳️ Voting process (EVM, VVPAT, NOTA)\n- 🗓️ Upcoming elections in India\n- ⚖️ Voter rights aur ECI\n\nKya jaanna chahte hain aap?" as const;
+
+/** USA reset welcome message. */
+const USA_RESET = "Hi! I'm **ElectBot** 🗳️ — your AI-powered election guide!\n\nI can help you understand:\n- 🪪 Voter registration\n- 🗳️ Voting day, Electoral College\n- 🗓️ Upcoming elections\n- ⚖️ Your voter rights\n\nWhat would you like to learn?" as const;
 
 export default function ChatPage() {
   const { country } = useCountry();
 
-  const initMsg = country === "india"
-    ? "**Namaste! Main ElectBot hoon 🗳️** — aapka AI-powered Indian election guide!\n\nMain aapki madad kar sakta hoon:\n- 🪪 Voter ID (EPIC) card ke baare mein\n- 🗳️ Voting process (EVM, VVPAT, NOTA)\n- 🗓️ Upcoming elections in India\n- ⚖️ Voter rights aur ECI\n\nKya jaanna chahte hain aap?"
-    : "Hi! I'm **ElectBot** 🗳️ — your AI-powered election guide. I can help you understand the election process, voter registration, timelines, and much more!\n\nWhat would you like to learn today?";
+  const initMsg = country === "india" ? INDIA_WELCOME : USA_WELCOME;
 
-  const [msgs, setMsgs] = useState<Message[]>([{ role: "bot", content: initMsg }]);
+  const [msgs, setMsgs] = useState<ChatMessage[]>([{ role: "bot", content: initMsg }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [chipsVisible, setChipsVisible] = useState(true);
-  const [history, setHistory] = useState<{ role: string; parts: { text: string }[] }[]>([]);
+  const [history, setHistory] = useState<GeminiHistoryEntry[]>([]);
   const [prevCountry, setPrevCountry] = useState(country);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,9 +48,7 @@ export default function ChatPage() {
       setPrevCountry(country);
       setHistory([]);
       setChipsVisible(true);
-      const newMsg = country === "india"
-        ? "**Namaste! Main ElectBot hoon 🗳️** — aapka AI-powered Indian election guide!\n\nMain aapki madad kar sakta hoon:\n- 🪪 Voter ID (EPIC) card ke baare mein\n- 🗳️ Voting process (EVM, VVPAT, NOTA)\n- 🗓️ Upcoming elections in India\n- ⚖️ Voter rights aur ECI\n\nKya jaanna chahte hain aap?"
-        : "Hi! I'm **ElectBot** 🗳️ — your AI-powered election guide!\n\nI can help you understand:\n- 🪪 Voter registration\n- 🗳️ Voting day, Electoral College\n- 🗓️ Upcoming elections\n- ⚖️ Your voter rights\n\nWhat would you like to learn?";
+      const newMsg = country === "india" ? INDIA_RESET : USA_RESET;
       setMsgs([{ role: "bot", content: newMsg }]);
     }
   }, [country, prevCountry]);

@@ -1,5 +1,14 @@
+/**
+ * src/app/page.tsx
+ *
+ * Landing page for the ElectBot application.
+ * Renders a hero section, country selector, feature cards,
+ * election process steps, and call-to-action for both India and USA modes.
+ *
+ * @module HomePage
+ */
+
 "use client";
-// src/app/page.tsx
 import Link from "next/link";
 import { useCountry, Country } from "@/lib/countryContext";
 import { homeContent } from "@/lib/countryData";

@@ -1,4 +1,13 @@
-// src/app/layout.tsx
+/**
+ * src/app/layout.tsx
+ *
+ * Root layout for the ElectBot application.
+ * Sets up global providers (CountryProvider), typography (Inter),
+ * navigation, skip-to-content link, Google Analytics, and JSON-LD
+ * structured data for SEO.
+ *
+ * @module RootLayout
+ */
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -59,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
         </CountryProvider>
       </body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID as string || "G-MHTZEW02TL"} />
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-MHTZEW02TL"} />
     </html>
   );
 }

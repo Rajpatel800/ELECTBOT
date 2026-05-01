@@ -20,7 +20,7 @@ export default function NotFound() {
       <h1 className="text-6xl font-black text-[#1a237e] mb-4 tracking-tight">404</h1>
       <h2 className="text-2xl font-bold text-[#454652] mb-3">Page Not Found</h2>
       <p className="text-[#767683] mb-8 max-w-md">
-        The ballot has been cast, but this page doesn't seem to exist. Let's
+        The ballot has been cast, but this page doesn&apos;t seem to exist. Let&apos;s
         get you back on the right track.
       </p>
       <Link

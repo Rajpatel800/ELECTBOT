@@ -1,3 +1,11 @@
+/**
+ * jest.config.js
+ *
+ * Jest configuration for the ElectBot application.
+ * Uses next/jest for seamless Next.js integration.
+ */
+
+/* eslint-disable @typescript-eslint/no-require-imports */
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
@@ -8,10 +16,12 @@ const createJestConfig = nextJest({
 const config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
+  // Prevent "worker has failed to exit gracefully" warnings in CI
+  forceExit: true,
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
-    "react-markdown": "<rootDir>/src/__mocks__/react-markdown.tsx"
+    "react-markdown": "<rootDir>/src/__mocks__/react-markdown.tsx",
   },
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
@@ -23,8 +33,6 @@ const config = {
     "!src/app/not-found.tsx",
     "!src/app/robots.ts",
     "!src/app/sitemap.ts",
-    // ErrorBoundary requires class-level lifecycle testing beyond jsdom scope
-    "!src/components/ErrorBoundary.tsx",
   ],
   testMatch: [
     "**/__tests__/**/*.[jt]s?(x)",
@@ -33,4 +41,3 @@ const config = {
 };
 
 module.exports = createJestConfig(config);
-

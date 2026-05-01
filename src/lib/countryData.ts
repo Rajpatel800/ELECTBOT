@@ -1,15 +1,32 @@
-// src/lib/countryData.ts
-// All country-specific data: learn modules, timeline, quiz, chat knowledge base
+/**
+ * src/lib/countryData.ts
+ *
+ * Unified data source for all country-specific content.
+ * Contains quiz questions, learn module summaries, election timelines,
+ * knowledge-base entries, chat chips, and home-page hero content
+ * for both India and the USA.
+ *
+ * Type definitions are imported from `@/lib/types` to maintain a
+ * single source of truth and avoid duplicate interface declarations.
+ *
+ * @module countryData
+ */
+
+import type {
+  Question,
+  LearnModule,
+  TimelineItem,
+  TimelineTab,
+  KBEntry,
+} from "@/lib/types";
+
+// Re-export types for backwards compatibility
+export type { Question, LearnModule, TimelineItem, TimelineTab, KBEntry };
+export type { ChatChip } from "@/lib/types";
 
 // ─────────────────────────────────────────────
 //  QUIZ DATA
 // ─────────────────────────────────────────────
-export interface Question {
-  q: string;
-  options: string[];
-  correct: number;
-  explanation: string;
-}
 
 export const indiaQuestions: Question[] = [
   { q: "What is the minimum voting age in India?", options: ["16 years", "18 years", "21 years", "25 years"], correct: 1, explanation: "✅ The 61st Amendment (1989) lowered the voting age to 18 in India for all elections." },
@@ -60,13 +77,6 @@ export const usaQuestions: Question[] = [
 // ─────────────────────────────────────────────
 //  LEARN MODULES
 // ─────────────────────────────────────────────
-export interface LearnModule {
-  id: string;
-  icon: string;
-  title: string;
-  tag: string;
-  content: string; // markdown-like string for simplicity
-}
 
 export const indiaModules: LearnModule[] = [
   {
@@ -117,22 +127,6 @@ export const usaModules: LearnModule[] = [
 // ─────────────────────────────────────────────
 //  TIMELINE DATA
 // ─────────────────────────────────────────────
-export interface TimelineItem {
-  status: "completed" | "current" | "upcoming" | "gold";
-  dot: string;
-  date: string;
-  title: string;
-  desc: string;
-  tag: string;
-  tagColor: string;
-  reminder?: boolean;
-}
-
-export interface TimelineTab {
-  key: string;
-  label: string;
-  items: TimelineItem[];
-}
 
 export const indiaTimeline: TimelineTab[] = [
   {
@@ -218,7 +212,7 @@ export const usaTimeline: TimelineTab[] = [
 // ─────────────────────────────────────────────
 //  KNOWLEDGE BASE (Chat)
 // ─────────────────────────────────────────────
-export interface KBEntry { keys: string[]; answer: string; }
+
 
 export const indiaKnowledgeBase: KBEntry[] = [
   {
@@ -290,6 +284,14 @@ export const usaKnowledgeBase: KBEntry[] = [
   },
 ];
 
+/**
+ * Searches the local knowledge base for the best matching answer.
+ * Uses keyword overlap scoring — falls back to a helpful default if no match is found.
+ *
+ * @param msg     - The user's message text (case-insensitive matching).
+ * @param country - Target country for the knowledge base lookup.
+ * @returns The best-matching knowledge base answer, or a default suggestion.
+ */
 export function getLocalAnswer(msg: string, country: "india" | "usa"): string {
   const kb = country === "india" ? indiaKnowledgeBase : usaKnowledgeBase;
   const lower = msg.toLowerCase();
@@ -370,4 +372,56 @@ export const homeContent = {
       { n: 5, title: "Transition", desc: "Winner takes office" },
     ],
   },
+};
+
+// ─────────────────────────────────────────────
+//  LOCAL LEARN MODULES (Firestore fallback)
+// ─────────────────────────────────────────────
+
+/** Fallback learn modules used when Firestore is unavailable. */
+export const localLearnModules: Record<string, LearnModule[]> = {
+  india: [
+    {
+      id: "in1", icon: "🪪", title: "Voter Registration (EPIC Card)", tag: "Beginner · 5 min",
+      content: `## Who Can Register?\n- Indian citizen aged **18 or above** on the qualifying date (1st January of the year)\n- Ordinary resident of the constituency\n- Not disqualified under any law\n\n## Step-by-Step Registration (Form 6)\n1. Visit **[voters.eci.gov.in](https://voters.eci.gov.in)** — the official ECI portal.\n2. Click **"New Registration for General Electors"**.\n3. Fill **Form 6** with accurate details.\n4. Upload: Passport photo · Proof of age (Aadhaar/Birth cert) · Address proof\n5. Submit and note your **Reference Number** (sent via SMS).\n6. A **Booth Level Officer (BLO)** may visit for address verification.\n7. Receive your **EPIC (Electoral Photo Identity Card)** by post — completely **FREE!**\n\n💡 *Also available via the **Voter Helpline App** (Android/iOS) or by calling **1950** (toll-free).*\n🌐 *Track application status at: [nvsp.in](https://nvsp.in)*`,
+    },
+    {
+      id: "in2", icon: "🏛️", title: "Types of Elections in India", tag: "Beginner · 6 min",
+      content: `## 1. Lok Sabha (General Elections)\nHeld every **5 years**. Elects 543 MPs to the **lower house of Parliament**. The party/coalition winning **272+ seats** forms the central government.\n\n## 2. Rajya Sabha (Upper House)\n245 members. **Not directly elected by the public** — elected by State Legislative Assembly members (MLAs).\n\n## 3. Vidhan Sabha (State Assembly)\nEach state elects its MLAs every 5 years. The majority party leader becomes **Chief Minister (CM)**.\n\n## 4. Local Body Elections\nElect Panchayat members (rural) and Municipal Corporation councillors (urban).\n\n## 5. By-Elections\nHeld when a seat becomes vacant mid-term. Also called **"Upchunav"** in Hindi.`,
+    },
+    {
+      id: "in3", icon: "📍", title: "Voting Day: Complete Guide", tag: "Intermediate · 6 min",
+      content: `## Valid ID Documents\nYour **EPIC (Voter ID)** is the primary document. Alternatives: Aadhaar · Passport · PAN Card · Driving License\n\n## Step-by-Step at the Polling Booth\n1. **Find your polling station:** [electoralsearch.eci.gov.in](https://electoralsearch.eci.gov.in)\n2. **Verification:** Polling Officer checks your name and verifies ID.\n3. **Indelible Ink:** Left index finger marked to prevent double-voting.\n4. **Cast Vote:** Press the blue button next to your chosen candidate on the **EVM**.\n5. **VVPAT Verification:** A paper slip appears for **7 seconds** showing the candidate name.\n\n⏰ Polls open **7 AM – 6 PM**.\n💡 **Pro tip:** If you're in the queue before 6 PM, you **must** be allowed to vote.`,
+    },
+    {
+      id: "in4", icon: "⚖️", title: "EVM Security & Vote Counting", tag: "Advanced · 7 min",
+      content: `## Why EVMs Are Secure\n- **Air-gapped:** No Wi-Fi, Bluetooth, USB, or internet connectivity.\n- **One-time programmable:** The microchip cannot be reprogrammed.\n- **Tamper detection:** Any attempt to open registers a fault.\n\n## First-Past-The-Post (FPTP)\nThe candidate with the **most votes wins** — no minimum vote share required.\n\n## NOTA (None of the Above)\nAvailable on every EVM as the **last option**. Introduced via Supreme Court order in 2013.`,
+    },
+    {
+      id: "in5", icon: "📜", title: "Your Fundamental Voter Rights", tag: "Essential · 5 min",
+      content: `## Constitutional Foundation\n- **Article 326:** Universal adult suffrage — every adult Indian citizen can vote.\n- **Secret Ballot:** Your vote is completely private.\n- **NOTA (Right to Reject):** Legal right to reject all candidates.\n\n## Report Violations\n- **cVIGIL App:** Photo/video evidence investigated within **100 minutes**.\n- **Voter Helpline:** Call **1950** (toll-free, 24x7 during elections).`,
+    },
+  ],
+  usa: [
+    {
+      id: "us1", icon: "📋", title: "Voter Registration Guide", tag: "Beginner · 5 min",
+      content: `## Eligibility\n- A U.S. citizen aged **18 or older** on or before Election Day.\n- A resident of the state where you're registering.\n\n## How to Register\n1. Visit **[vote.gov](https://vote.gov)**.\n2. Provide: Full legal name · Address · Date of birth · State ID or last 4 of SSN.\n3. **Deadline:** Most states require registration **15–30 days** before Election Day.\n4. Receive your **Voter Registration Card** by mail in 2–4 weeks.\n\n💡 **Same-Day Registration** available in 20+ states!`,
+    },
+    {
+      id: "us2", icon: "🗳️", title: "Federal, State & Local Elections", tag: "Intermediate · 6 min",
+      content: `## Presidential Elections (Every 4 Years)\nCitizens vote for a **slate of Electors** (the Electoral College), not the President directly.\n\n## Midterm Elections (Every 2 Years)\nAll **435 House seats**, ~33 Senate seats, and 36 Governorships on the ballot.\n\n## Local Elections\nElect mayors, sheriffs, judges, school board members. Despite affecting daily life most directly, turnout is often **under 15%**.`,
+    },
+    {
+      id: "us3", icon: "📍", title: "Election Day: What to Expect", tag: "Intermediate · 7 min",
+      content: `## Three Ways to Vote\n1. **In-Person on Election Day**\n2. **Early Voting** — 1–2 weeks before.\n3. **Mail-In / Absentee Ballot**\n\n## At the Polling Place\n1. Find your location at **[vote.gov](https://vote.gov/find-my-polling-place)**\n2. Bring accepted ID (~35 states require it).\n3. Mark your choices in a **private voting booth**.\n\n⚠️ **If you are in line before polls close, you have the legal right to vote!**`,
+    },
+    {
+      id: "us4", icon: "⚖️", title: "The Electoral College Explained", tag: "Advanced · 8 min",
+      content: `## The Core Mechanic\n**538 total Electors.** A candidate needs **270 electoral votes** to win.\n\n## How Allocations Work\nEach state's votes = House Representatives + 2 Senators.\n\n## Winner-Takes-All\nIn 48 states + DC, the candidate who wins the popular vote gets **all** electoral votes. Only **Maine** and **Nebraska** can split votes.`,
+    },
+    {
+      id: "us5", icon: "📜", title: "Constitutional Voter Protections", tag: "Advanced · 6 min",
+      content: `## Key Amendments\n- **15th (1870):** Cannot deny vote based on race.\n- **19th (1920):** Women's right to vote.\n- **24th (1964):** Abolished poll taxes.\n- **26th (1971):** Voting age lowered to 18.\n\n## Your Rights at the Polls\n- **Secret Ballot** — No one can see your vote.\n- **The Line Rule** — In line before closing? You must be allowed to vote.\n- **Provisional Ballot** — Available if your eligibility is questioned.\n\n🆘 **Hotline: 1-866-OUR-VOTE**`,
+    },
+  ],
 };

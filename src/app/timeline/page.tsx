@@ -1,10 +1,22 @@
+/**
+ * src/app/timeline/page.tsx
+ *
+ * Election timeline visualization with tabbed navigation.
+ * Displays key dates for past, current, and future elections
+ * with visual status indicators (completed, current, upcoming).
+ *
+ * @module TimelinePage
+ */
+
 "use client";
-// src/app/timeline/page.tsx
+
 import { useState } from "react";
 import { useCountry } from "@/lib/countryContext";
-import { indiaTimeline, usaTimeline, TimelineTab, TimelineItem } from "@/lib/countryData";
+import { indiaTimeline, usaTimeline } from "@/lib/countryData";
+import type { TimelineItem as TimelineItemType, TimelineTab } from "@/lib/types";
 
-function TimelineItemCard({ item }: { item: TimelineItem }) {
+/** Renders a single timeline event card with status dot and date. */
+function TimelineItemCard({ item }: { readonly item: TimelineItemType }) {
   return (
     <div className="relative pl-10 mb-8">
       <div
@@ -23,7 +35,7 @@ function TimelineItemCard({ item }: { item: TimelineItem }) {
       </div>
       <article className="bg-white rounded-2xl p-5 shadow-sm border border-[#c6c5d4]/20">
         <p className="text-[11px] font-semibold text-[#767683] uppercase tracking-wider mb-1">
-          <time>{item.date}</time>
+          <time dateTime={item.date.replace(/\s/g, '-')}>{item.date}</time>
         </p>
         <h3 className="font-bold text-[#1a237e] mb-1.5">{item.title}</h3>
         <p className="text-sm text-[#454652] leading-relaxed mb-3">{item.desc}</p>

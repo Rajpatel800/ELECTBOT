@@ -1,16 +1,40 @@
+/**
+ * src/components/Navbar.tsx
+ *
+ * Primary navigation component for the ElectBot application.
+ * Renders a fixed top navigation bar with desktop links and a
+ * hamburger-toggled mobile menu overlay.
+ *
+ * @module Navbar
+ */
+
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const links = [
+/** Navigation link definition. */
+interface NavLink {
+  /** Route path. */
+  readonly href: string;
+  /** Display label. */
+  readonly label: string;
+}
+
+/** Ordered list of navigation links. */
+const LINKS: readonly NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/learn", label: "Learn" },
   { href: "/timeline", label: "Timeline" },
   { href: "/quiz", label: "Quiz" },
   { href: "/chat", label: "Ask ElectBot" },
-];
+] as const;
 
+/**
+ * Fixed-position top navigation bar.
+ * Shows desktop links on `md`+ screens and a hamburger toggle on mobile.
+ */
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -29,7 +53,7 @@ export default function Navbar() {
 
         {/* Desktop Links — centered column */}
         <div className="hidden md:flex items-center justify-center gap-0.5" role="list">
-          {links.map((l) => (
+          {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}
@@ -68,7 +92,7 @@ export default function Navbar() {
           role="navigation"
           aria-label="Mobile navigation menu"
         >
-          {links.map((l) => (
+          {LINKS.map((l) => (
             <Link
               key={l.href}
               href={l.href}

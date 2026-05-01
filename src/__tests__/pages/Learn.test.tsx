@@ -4,7 +4,11 @@ import * as CountryContext from "../../lib/countryContext";
 
 global.fetch = jest.fn();
 
-jest.mock("react-markdown", () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
+jest.mock("react-markdown", () => {
+  const MockReactMarkdown = ({ children }: { children: React.ReactNode }) => <div>{children}</div>;
+  MockReactMarkdown.displayName = "ReactMarkdown";
+  return MockReactMarkdown;
+});
 jest.mock("../../lib/countryContext", () => ({ useCountry: jest.fn() }));
 
 // Mock firestoreService so modules load immediately without real Firestore

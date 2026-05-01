@@ -102,11 +102,15 @@ npm run test:watch        # Watch mode
 npm run test:coverage     # Coverage report
 ```
 
-**Test Coverage:**
+**Test Coverage: 108 tests across 16 suites**
 - `countryData.test.ts` — Knowledge base, quiz data integrity, chat chips (22 tests)
-- `firestoreService.test.ts` — Data access layer with mocked Firestore (16 tests)
+- `firestoreService.test.ts` — Data access layer with mocked Firestore (6 tests)
 - `Leaderboard.test.tsx` — UI component states (6 tests)
 - `chatApiRoute.test.ts` — Gemini configuration and input validation (6 tests)
+- `ErrorBoundary.test.tsx` — Error boundary fallback UI and reset (4 tests)
+- `types.test.ts` — Centralized type integrity validation (5 tests)
+- `pages/*.test.tsx` — Page component rendering and interaction tests
+- `Navbar.test.tsx`, `countryContext.test.tsx`, `firebase.test.ts` — Core infrastructure
 
 ---
 
@@ -114,9 +118,9 @@ npm run test:coverage     # Coverage report
 
 - **API Key Protection:** The Gemini API key is server-side only (`GEMINI_API_KEY`). It never reaches the browser.
 - **Rate Limiting:** `/api/chat` is rate-limited to 20 requests per IP per minute.
-- **Input Validation:** Message length is capped at 1,000 characters.
+- **Input Validation:** Message length is capped at 1,000 characters. Chat history is sanitized on the server.
 - **Request Timeout:** Gemini calls time out after 15 seconds.
-- **HTTP Headers:** `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, and `Content-Security-Policy` are all set via `next.config.ts`.
+- **HTTP Headers:** Strict `Content-Security-Policy`, `Strict-Transport-Security` (HSTS with preload), `Permissions-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, and `Referrer-Policy` are all set via `next.config.ts`.
 
 ---
 
@@ -141,12 +145,18 @@ src/
 │   ├── Leaderboard.tsx        # Firestore-powered leaderboard
 │   └── Navbar.tsx             # Navigation
 ├── lib/
+│   ├── types.ts              # Centralized type definitions (SSoT)
 │   ├── countryContext.tsx     # Global country state (React Context)
 │   ├── countryData.ts         # Static data: quiz, chat KB, chips
 │   ├── firebase.ts            # Firebase app singleton
 │   └── firestoreService.ts    # Data access layer (typed)
-└── __tests__/                 # Jest test suites
+└── __tests__/                 # Jest test suites (108 tests)
 ```
+
+---
+
+## 🤝 Contributing
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development standards and guidelines.
 
 ---
 
