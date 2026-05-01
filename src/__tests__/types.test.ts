@@ -38,12 +38,12 @@ describe("Type Definitions and Data Integrity", () => {
 
     it("all India questions have valid structure", () => {
       expect(indiaQuestions.length).toBeGreaterThanOrEqual(10);
-      indiaQuestions.forEach((q, i) => validateQuestion(q, i, "India"));
+      indiaQuestions.forEach((q) => validateQuestion(q));
     });
 
     it("all USA questions have valid structure", () => {
       expect(usaQuestions.length).toBeGreaterThanOrEqual(8);
-      usaQuestions.forEach((q, i) => validateQuestion(q, i, "USA"));
+      usaQuestions.forEach((q) => validateQuestion(q));
     });
 
     it("no duplicate questions within the same country", () => {

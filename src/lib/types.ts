@@ -50,12 +50,8 @@ export interface LearnModule {
   readonly tag: string;
   /** Markdown content of the module body. */
   readonly content: string;
-}
-
-/** Firestore-backed learn module with an ordering field. */
-export interface FirestoreLearnModule extends LearnModule {
-  /** Sort order for display (ascending). */
-  readonly order: number;
+  /** Sort order for display (ascending). Only present for Firestore-backed modules. */
+  readonly order?: number;
 }
 
 // ─────────────────────────────────────────────

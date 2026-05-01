@@ -5,16 +5,17 @@
  * Verifies that render errors are caught and a user-friendly fallback is shown.
  */
 
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 /** A component that always throws during render. */
-function ThrowingComponent(): JSX.Element {
+function ThrowingComponent(): React.ReactNode {
   throw new Error("Test render error");
 }
 
 /** A component that renders normally. */
-function NormalComponent(): JSX.Element {
+function NormalComponent() {
   return <div>Everything is fine</div>;
 }
 

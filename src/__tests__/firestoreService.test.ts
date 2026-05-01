@@ -36,6 +36,9 @@ afterAll(() => { console.error = originalConsoleError; });
 const mockAddDoc = addDoc as jest.MockedFunction<typeof addDoc>;
 const mockGetDocs = getDocs as jest.MockedFunction<typeof getDocs>;
 
+/** Resolved type of getDocs — used for safe test mock casts. */
+type MockSnapshot = Awaited<ReturnType<typeof getDocs>>;
+
 /** Helper to create a mock Firestore document snapshot. */
 function createMockDoc(id: string, data: Record<string, unknown>) {
   return { id, data: () => data };
@@ -80,7 +83,7 @@ describe("getTopScores()", () => {
         createMockDoc("doc1", { country: "india", score: 900, accuracy: 95, timestamp: { toDate: () => new Date() } }),
         createMockDoc("doc2", { country: "india", score: 750, accuracy: 80, timestamp: { toDate: () => new Date() } }),
       ],
-    } as ReturnType<typeof getDocs> extends Promise<infer T> ? T : never);
+    } as unknown as MockSnapshot);
 
     const scores = await getTopScores("india", 2);
     expect(scores).toHaveLength(2);
@@ -98,7 +101,7 @@ describe("getTopScores()", () => {
   it("returns empty array when no documents found", async () => {
     mockGetDocs.mockResolvedValueOnce({
       docs: [],
-    } as ReturnType<typeof getDocs> extends Promise<infer T> ? T : never);
+    } as unknown as MockSnapshot);
     const scores = await getTopScores("india");
     expect(scores).toEqual([]);
   });
@@ -119,7 +122,7 @@ describe("getLearnModules()", () => {
         content: "Some test content",
         order: 1,
       })],
-    } as ReturnType<typeof getDocs> extends Promise<infer T> ? T : never);
+    } as unknown as MockSnapshot);
 
     const modules = await getLearnModules("india");
     expect(modules).toHaveLength(1);
@@ -132,5 +135,68 @@ describe("getLearnModules()", () => {
     mockGetDocs.mockRejectedValueOnce(new Error("offline"));
     const modules = await getLearnModules("usa");
     expect(modules).toEqual([]);
+  });
+
+  it("handles documents with missing/null fields using fallback defaults", async () => {
+    mockGetDocs.mockResolvedValueOnce({
+      docs: [createMockDoc("empty1", {})],
+    } as unknown as MockSnapshot);
+
+    const modules = await getLearnModules("india");
+    expect(modules).toHaveLength(1);
+    expect(modules[0].icon).toBe("");
+    expect(modules[0].title).toBe("");
+    expect(modules[0].tag).toBe("");
+    expect(modules[0].content).toBe("");
+    expect(modules[0].order).toBe(0);
+  });
+});
+
+// ─────────────────────────────────────────────
+// Edge cases: non-Error throw objects
+// ─────────────────────────────────────────────
+describe("Error handling edge cases", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  it("submitQuizScore handles non-Error throw values gracefully", async () => {
+    mockAddDoc.mockRejectedValueOnce("string error");
+    const id = await submitQuizScore("india", 100, 50);
+    expect(id).toBeNull();
+  });
+
+  it("getTopScores handles non-Error throw values gracefully", async () => {
+    mockGetDocs.mockRejectedValueOnce(42);
+    const scores = await getTopScores("usa", 5);
+    expect(scores).toEqual([]);
+  });
+
+  it("getLearnModules handles non-Error throw values gracefully", async () => {
+    mockGetDocs.mockRejectedValueOnce(null);
+    const modules = await getLearnModules("india");
+    expect(modules).toEqual([]);
+  });
+
+  it("getTopScores handles documents with missing timestamp.toDate", async () => {
+    mockGetDocs.mockResolvedValueOnce({
+      docs: [createMockDoc("doc-no-ts", { country: "usa", score: 500, accuracy: 75, timestamp: null })],
+    } as unknown as MockSnapshot);
+
+    const scores = await getTopScores("usa", 1);
+    expect(scores).toHaveLength(1);
+    expect(scores[0].score).toBe(500);
+    expect(scores[0].timestamp).toBeInstanceOf(Date);
+  });
+
+  it("getTopScores handles documents with missing data fields", async () => {
+    mockGetDocs.mockResolvedValueOnce({
+      docs: [createMockDoc("doc-empty", {})],
+    } as unknown as MockSnapshot);
+
+    const scores = await getTopScores("india", 1);
+    expect(scores).toHaveLength(1);
+    expect(scores[0].country).toBe("");
+    expect(scores[0].score).toBe(0);
+    expect(scores[0].accuracy).toBe(0);
+    expect(scores[0].timestamp).toBeInstanceOf(Date);
   });
 });
